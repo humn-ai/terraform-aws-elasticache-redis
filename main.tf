@@ -85,6 +85,17 @@ resource "aws_elasticache_replication_group" "default" {
       num_node_groups         = var.cluster_mode_num_node_groups
     }
   }
+
+  dynamic "log_delivery_configuration" {
+    for_each = var.log_delivery_configuration
+
+    content {
+      destination      = lookup(log_delivery_configuration.value, "destination", null)
+      destination_type = lookup(log_delivery_configuration.value, "destination_type", null)
+      log_format       = lookup(log_delivery_configuration.value, "log_format", null)
+      log_type         = lookup(log_delivery_configuration.value, "log_type", null)
+    }
+  }
 }
 
 #

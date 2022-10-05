@@ -29,6 +29,12 @@ variable "vpc_id" {
   description = "VPC ID"
 }
 
+variable "log_delivery_configuration" {
+  type        = list(map(any))
+  default     = []
+  description = "The log_delivery_configuration block allows the streaming of Redis SLOWLOG or Redis Engine Log to CloudWatch Logs or Kinesis Data Firehose. Max of 2 blocks."
+}
+
 variable "subnets" {
   type        = list(string)
   description = "Subnet IDs"
@@ -66,8 +72,8 @@ variable "security_group_rules" {
     }
   ]
   description = <<-EOT
-    A list of maps of Security Group rules. 
-    The values of map is fully complated with `aws_security_group_rule` resource. 
+    A list of maps of Security Group rules.
+    The values of map is fully complated with `aws_security_group_rule` resource.
     To get more info see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule .
   EOT
 }
